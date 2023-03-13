@@ -1,13 +1,29 @@
 import './style.css';
 import { WebContainer } from '@webcontainer/api';
-import { files } from './files';
+// import { files } from './files';
 import { Terminal } from 'xterm';
 import 'xterm/css/xterm.css';
 
 /** @type {import('@webcontainer/api').WebContainer}  */
 let webcontainerInstance;
+const files = {}
+
+const loadFile = (name) => {
+  const xhr = new XMLHttpRequest()
+  const okStatus = document.location.protocol === 'file:' ? 0 : 200
+  xhr.open('GET', name, false)
+  xhr.overrideMimeType('text/html;charset=utf-8')// 默认为utf-8
+  xhr.send(null)
+  return xhr.status === okStatus ? xhr.responseText : null
+}
 
 window.addEventListener('load', async () => {
+  files['slides.md'] = { file: {
+    contents: loadFile('/slidev/slides.md')
+  }}
+  files['package.json'] = { file: {
+    contents: loadFile('/slidev/package.json')
+  }}
   textareaEl.value = files['slides.md'].file.contents;
   textareaEl.addEventListener('input', (e) => {
     writeIndexJS(e.currentTarget.value);
