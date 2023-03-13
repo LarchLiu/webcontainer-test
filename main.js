@@ -94,8 +94,8 @@ document.querySelector('#app').innerHTML = `
     <div class="preview">
       <iframe src="loading.html"></iframe>
     </div>
-    <div class="terminal"></div>
   </div>
+  <div class="terminal"></div>
 `;
 
 /** @type {HTMLIFrameElement | null} */
